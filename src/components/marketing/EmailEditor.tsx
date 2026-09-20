@@ -5,6 +5,8 @@ import { TemplateLibrary } from "./TemplateLibrary";
 import { EmojiPicker } from "./EmojiPicker";
 import { LayoutLibrary, LayoutThumb } from "./LayoutLibrary";
 import { PromoBanner } from "./PromoBanner";
+import { RichEmailLayout, isRichLayout } from "./EmailLayouts";
+
 import {
   LAYOUT_LABEL,
   LAYOUT_PRESETS,
@@ -74,7 +76,19 @@ export function EmailPreview({ value, promotion }: { value: EmailContent; promot
         <p className="mt-0.5 text-[12px] text-muted-foreground">{renderPreview(value.preheader)}</p>
       </div>
 
+      {isRichLayout(layout) ? (
+        <RichEmailLayout
+          value={value}
+          layout={layout}
+          accent={accent}
+          heroOf={heroOf}
+          offer={offer}
+          property="Holiday Inn Times Square"
+        />
+      ) : (
+        <>
       {(layout === "hero_top" || layout === "gallery_three") && <Banner photo={heroOf(0)} height={140} />}
+
 
       {layout === "full_bleed" ? (
         <div className="relative px-6 py-12 text-center">
@@ -134,6 +148,9 @@ export function EmailPreview({ value, promotion }: { value: EmailContent; promot
           </span>
         </div>
       )}
+        </>
+      )}
+
 
       <div className="border-t border-border px-6 py-4 text-[11px] text-muted-foreground">
         Holiday Inn New York City – Times Square · Unsubscribe

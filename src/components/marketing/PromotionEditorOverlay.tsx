@@ -240,9 +240,10 @@ export function PromotionEditorOverlay({ promotion, onClose }: { promotion?: Pro
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="mx-auto w-full max-w-4xl px-4 py-5 sm:px-6">
-          <div className="space-y-4">
+        <div className="mx-auto grid w-full max-w-6xl gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="min-w-0 space-y-4">
             <section className="rounded-lg border border-border bg-card p-4 shadow-card">
+
               <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Details</p>
               <div className="mt-3 grid gap-2 sm:grid-cols-2">
                 <label className="grid gap-1 sm:col-span-2">
@@ -393,13 +394,6 @@ export function PromotionEditorOverlay({ promotion, onClose }: { promotion?: Pro
                 </div>
               </div>
             </section>
-            <section className="rounded-lg border border-border bg-card p-4 shadow-card sm:p-5">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Guest preview</p>
-              <p className="mt-1 text-[12px] text-muted-foreground">This is how the promotion will appear in guest messages.</p>
-              <div className="mx-auto mt-4 max-w-md">
-                <PromoBanner promotion={preview} />
-              </div>
-            </section>
 
             {error && <p className="text-[11.5px] font-medium text-destructive">{error}</p>}
             <div className="sticky bottom-0 flex justify-end gap-2 border-t border-border bg-canvas/95 py-3 backdrop-blur">
@@ -409,8 +403,19 @@ export function PromotionEditorOverlay({ promotion, onClose }: { promotion?: Pro
               </Button>
             </div>
           </div>
+
+          <aside className="min-w-0 lg:sticky lg:top-0 lg:self-start">
+            <section className="rounded-lg border border-border bg-card p-4 shadow-card">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Guest preview</p>
+              <p className="mt-1 text-[12px] text-muted-foreground">This is how the promotion will appear in guest messages.</p>
+              <div className="mt-4">
+                <PromoBanner promotion={preview} />
+              </div>
+            </section>
+          </aside>
         </div>
       </div>
+
 
       <MediaPicker
         open={picker !== null}
