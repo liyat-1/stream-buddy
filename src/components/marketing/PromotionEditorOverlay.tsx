@@ -240,9 +240,10 @@ export function PromotionEditorOverlay({ promotion, onClose }: { promotion?: Pro
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="mx-auto w-full max-w-4xl px-4 py-5 sm:px-6">
-          <div className="space-y-4">
+        <div className="mx-auto grid w-full max-w-6xl gap-5 px-4 py-5 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="min-w-0 space-y-4">
             <section className="rounded-lg border border-border bg-card p-4 shadow-card">
+
               <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Details</p>
               <div className="mt-3 grid gap-2 sm:grid-cols-2">
                 <label className="grid gap-1 sm:col-span-2">
