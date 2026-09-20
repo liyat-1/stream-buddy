@@ -146,3 +146,8 @@
 - [x] Offer columns keep "See config details" for promotion info only, with Change offer and Clear column moved out beside the header
 - [x] Close/save sweep via Playwright: campaign editor, promotion editor, strategy dialog, test dialog, assign board, promo and media boards all leave the page usable — freeze not reproducible
 - [ ] Consolidate Promotions and Assignments tabs into one workspace per the approved plan
+
+- [x] Merged Promotions + Assignments into one list (count, Assign/Edit assignment, three-dot menu)
+- [x] Rebuilt assignment as a board: available campaigns column + three section columns with All/Direct/OTA drag
+- [x] Email template board (Select email template) with template columns, mini layout preview, change/clear/details
+- [x] Pre-made template per layout (Layout starters) and nine promotions using the new banner designs

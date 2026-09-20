@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Layers, Gift, Image } from "lucide-react";
+import { Layers, Gift, Image, Layout } from "lucide-react";
 import { StrategyOverlay } from "./StrategyOverlay";
 import { PromoDropOverlay } from "./PromoDropOverlay";
 import { MediaAssignOverlay } from "./MediaAssignOverlay";
+import { TemplateDropOverlay } from "./TemplateDropOverlay";
 import { Button } from "@/components/ui/button";
 import {
   campaignMediaIds,
+  campaignTemplateId,
   campaignPromotionIds,
   useMarketing,
   type MarketingCampaign,
@@ -45,16 +47,17 @@ function ToolButton({
  * the overlays each button opens.
  */
 export function MarketingTools({ campaigns }: { campaigns: MarketingCampaign[] }) {
-  const [overlay, setOverlay] = useState<"strategy" | "promo" | "media" | null>(null);
+  const [overlay, setOverlay] = useState<"strategy" | "promo" | "media" | "template" | null>(null);
 
   const withPromo = campaigns.filter((c) => {
     const ids = campaignPromotionIds(c);
     return ids.direct || ids.ota;
   });
   const withMedia = campaigns.filter((c) => campaignMediaIds(c).length > 0);
+  const withTemplate = campaigns.filter((c) => Boolean(campaignTemplateId(c)));
 
   return (
-    <div className="grid gap-2 sm:grid-cols-3">
+    <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
       <ToolButton
         icon={Layers}
         title="Manage channel strategy"
@@ -68,6 +71,12 @@ export function MarketingTools({ campaigns }: { campaigns: MarketingCampaign[] }
         onClick={() => setOverlay("promo")}
       />
       <ToolButton
+        icon={Layout}
+        title="Select email template"
+        summary={`${withTemplate.length} of ${campaigns.length} campaigns use a saved template`}
+        onClick={() => setOverlay("template")}
+      />
+      <ToolButton
         icon={Image}
         title="Text media"
         summary={`${withMedia.length} of ${campaigns.length} campaigns have a file attached`}
@@ -76,6 +85,7 @@ export function MarketingTools({ campaigns }: { campaigns: MarketingCampaign[] }
 
       <StrategyOverlay open={overlay === "strategy"} campaigns={campaigns} onClose={() => setOverlay(null)} />
       {overlay === "promo" && <PromoDropOverlay campaigns={campaigns} onClose={() => setOverlay(null)} />}
+      {overlay === "template" && <TemplateDropOverlay campaigns={campaigns} onClose={() => setOverlay(null)} />}
       {overlay === "media" && <MediaAssignOverlay campaigns={campaigns} onClose={() => setOverlay(null)} />}
     </div>
   );

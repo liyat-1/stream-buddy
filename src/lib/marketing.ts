@@ -337,6 +337,48 @@ export const MERGE_TAGS = [
   { token: "{{booking_link}}", label: "bookingLink", tone: "violet", chip: "bg-violet-100 text-violet-700 hover:bg-violet-200" },
 ];
 
+/** Ready-made copy so every layout ships as a usable starter template. */
+const LAYOUT_COPY: Record<EmailLayout, { name: string; heading: string; body: string; cta: string; accent: string }> = {
+  hero_top: { name: "Hero announcement", heading: "Welcome to {{hotel_name}}", body: "Your room is ready and the terrace is waiting. Here is everything you need before you arrive on {{checkin_date}}.", cta: "View your booking", accent: "#2563eb" },
+  text_only: { name: "Plain note", heading: "A quick note about your stay", body: "No pictures, just the essentials: check-in opens at 3pm and our team is on hand day and night.", cta: "See the details", accent: "#111827" },
+  split: { name: "Side by side", heading: "Make it a little more special", body: "Late checkout, breakfast in bed or an hour at the spa — add anything to your room in a couple of taps.", cta: "Browse extras", accent: "#0f766e" },
+  full_bleed: { name: "Full bleed offer", heading: "Your private rate is live", body: "Book direct in the next 14 days and enjoy our best available rate with free cancellation.", cta: "Claim my rate", accent: "#be123c" },
+  gallery_two: { name: "Two picture story", heading: "Two reasons to come back", body: "Sunset on the rooftop and breakfast on the terrace. Both are included when you book direct.", cta: "See available dates", accent: "#b45309" },
+  gallery_three: { name: "Three highlights", heading: "Everything waiting for you", body: "The pool, the spa and the kitchen garden — a short guide to the best of the hotel.", cta: "Plan my stay", accent: "#0369a1" },
+  image_left: { name: "Picture left", heading: "Your local guide is ready", body: "Our favourite places to eat, wander and unwind, all within a short walk of the front door.", cta: "Explore the guide", accent: "#0369a1" },
+  image_right: { name: "Picture right", heading: "A table is waiting", body: "Seasonal plates, local wine and a view worth lingering over. Reserve before you arrive.", cta: "Reserve a table", accent: "#0f766e" },
+  headline_first: { name: "Headline first", heading: "Come back for the weekend", body: "Your preferred guest rate includes breakfast and a later checkout when you book direct.", cta: "See available dates", accent: "#1d4ed8" },
+  cta_focus: { name: "One clear action", heading: "One tap and it is booked", body: "Everything is set. Confirm your arrival time and we will take care of the rest.", cta: "Confirm arrival", accent: "#2563eb" },
+  newsletter_grid: { name: "Seasonal newsletter", heading: "What's on this season", body: "Long lunches on the terrace. Live music on Fridays. A new spa ritual. Here is what is coming up.", cta: "See the calendar", accent: "#0f766e" },
+  logo_header: { name: "Branded announcement", heading: "News from {{hotel_name}}", body: "A short note from all of us: the new wing is open and guests are invited to take a look.", cta: "Read more", accent: "#1d4ed8" },
+  centered_invite: { name: "Formal invitation", heading: "You are invited", body: "Join us for an evening of food and music in the courtyard, with a glass on arrival.", cta: "Reserve a place", accent: "#8a6b2f" },
+  offer_first: { name: "Offer led", heading: "Your discount is waiting", body: "Use your code at checkout for the best rate we offer, available on direct bookings only.", cta: "Book with my code", accent: "#be123c" },
+  two_column_cards: { name: "Two feature cards", heading: "Two ways to make it yours", body: "A suite upgrade or a dinner for two — pick whichever suits the occasion.", cta: "Choose mine", accent: "#b45309" },
+  postcard: { name: "Postcard", heading: "Wish you were here", body: "The sea is calm, the terrace is quiet and your usual table is free this weekend.", cta: "Book the weekend", accent: "#0369a1" },
+  list_highlights: { name: "What's included", heading: "Everything included in your stay", body: "Breakfast for two. Late checkout. Welcome drink on arrival. Free cancellation until the day before.", cta: "See my rate", accent: "#0f766e" },
+  magazine: { name: "Magazine feature", heading: "An hour that changes the day", body: "Our spa director on why the quietest hour of the morning is the one worth booking.", cta: "Book the ritual", accent: "#9333ea" },
+  dark_luxe: { name: "Dark luxe", heading: "The suite, reserved for you", body: "A quiet floor, a private terrace and a view of the whole bay. Available for your dates.", cta: "View the suite", accent: "#111827" },
+  stay_receipt: { name: "Stay summary", heading: "Your reservation is confirmed", body: "Here are your stay details. Everything can be changed from your booking up to the day before.", cta: "Manage booking", accent: "#1f2937" },
+};
+
+/** One ready-made template per layout, so each structure has a starting point. */
+const LAYOUT_TEMPLATES: EmailTemplate[] = LAYOUT_PRESETS.map((preset) => {
+  const copy = LAYOUT_COPY[preset.value];
+  return {
+    id: `layout-${preset.value}`,
+    name: copy.name,
+    desc: preset.desc,
+    category: "Layout starters",
+    accent: copy.accent,
+    hero: preset.photo,
+    heading: copy.heading,
+    body: copy.body,
+    ctaLabel: copy.cta,
+    layout: preset.value,
+    layouts: [preset.value],
+  };
+});
+
 const TEMPLATES: EmailTemplate[] = [
   {
     id: "welcome",
@@ -455,6 +497,7 @@ const TEMPLATES: EmailTemplate[] = [
     layout: "headline_first",
     layouts: ["headline_first", "hero_top", "cta_focus", "gallery_two"],
   },
+  ...LAYOUT_TEMPLATES,
 ];
 
 export const FOLDERS = [
@@ -545,6 +588,17 @@ const PROMOTIONS: Promotion[] = [
   { id: "family-kids-stay", name: "Kids stay free", detail: "Up to two children in the same room at no extra cost.", code: "FAMILY0", codeType: "rate", tagline: "👨‍👩‍👧 Kids stay free", bannerStyle: "teal" },
   { id: "longstay-25", name: "25% off long stays", detail: "Five nights or more, booked direct.", code: "LONG25", codeType: "rate", discountPercent: 25, minNights: 5, tagline: "🧳 Stay longer, save more", bannerStyle: "emerald" },
   { id: "welcome-drink", name: "Welcome drink", detail: "A drink at the bar on arrival for every guest.", code: "CHEERS", codeType: "promo", tagline: "🍸 First drink is ours", bannerStyle: "sunset" },
+
+  // Ready-made offers showcasing the new banner designs.
+  { id: "neon-night-25", name: "Neon nights 25% off", detail: "Late-booking rate for city-break guests.", code: "NEON25", codeType: "promo", discountPercent: 25, tagline: "✨ Lights on, rates down", bannerStyle: "plum", bannerTemplate: "neon-ticket", kicker: "YOU UNLOCKED" },
+  { id: "flash-sale-40", name: "Flash sale 40% off", detail: "48-hour flash sale on selected rooms.", code: "FLASH40", codeType: "promo", discountPercent: 40, tagline: "🔥 48 hours only", bannerStyle: "rose", bannerTemplate: "tape-sale", kicker: "LIMITED TIME" },
+  { id: "coupon-15", name: "Guest coupon 15% off", detail: "A simple coupon for returning guests.", code: "GUEST15", codeType: "promo", discountPercent: 15, tagline: "🎟️ A little thank you", bannerStyle: "slate", bannerTemplate: "coupon-note", kicker: "FOR YOU" },
+  { id: "poster-30", name: "Poster sale 30% off", detail: "Seasonal poster offer for direct bookings.", code: "POSTER30", codeType: "promo", discountPercent: 30, tagline: "📣 Season sale", bannerStyle: "sunset", bannerTemplate: "stacked-poster", kicker: "SEASON SALE" },
+  { id: "voucher-dinner", name: "Dinner voucher", detail: "A voucher for dinner for two during the stay.", code: "VOUCHER2", codeType: "promo", tagline: "🍷 Dinner for two", bannerStyle: "emerald", bannerTemplate: "classic-voucher", kicker: "VOUCHER" },
+  { id: "editorial-20", name: "Editorial 20% off", detail: "Editorial-style offer for suite upgrades.", code: "EDIT20", codeType: "promo", discountPercent: 20, tagline: "🖤 Quietly generous", bannerStyle: "slate", bannerTemplate: "fashion-sale", kicker: "MEMBERS" },
+  { id: "split-weekend", name: "Split weekend offer", detail: "Two nights at a reduced weekend rate.", code: "SPLIT2", codeType: "rate", discountPercent: 18, minNights: 2, tagline: "🥂 Two nights, better rate", bannerStyle: "midnight", bannerTemplate: "split-sale", kicker: "WEEKEND" },
+  { id: "type-coupon-10", name: "Type coupon 10% off", detail: "A bold typographic coupon for any stay.", code: "TYPE10", codeType: "promo", discountPercent: 10, tagline: "🔤 Ten percent, simply", bannerStyle: "amber", bannerTemplate: "type-coupon", kicker: "COUPON" },
+  { id: "gift-stay", name: "Gift a stay", detail: "A gift offer guests can pass to friends and family.", code: "GIFTIT", codeType: "promo", tagline: "🎁 A gift from us", bannerStyle: "rose", bannerTemplate: "gift-offer", kicker: "A GIFT FOR YOU" },
 ];
 
 function variantFrom(seed: Seed, key: AudienceKey): Variant {
@@ -961,3 +1015,39 @@ export const CAMPAIGN_BULK_DRAG_TYPE = "application/x-directful-campaign-bulk";
 export type BulkScope = "both" | "direct" | "ota";
 export const PROMO_DRAG_TYPE = "application/x-directful-promotion";
 
+
+/* -------------------------------------------------------- email templates */
+
+/** The email template a campaign currently uses (Direct leads). */
+export function campaignTemplateId(c: MarketingCampaign): string {
+  return c.variants.direct.email.templateId || c.variants.ota.email.templateId;
+}
+
+/** Applies a saved template to both guest segments of a campaign. */
+export function applyTemplateToCampaign(campaignId: string, templateId: string) {
+  mutate((draft) => {
+    const template = draft.templates.find((t) => t.id === templateId);
+    const campaign = draft.campaigns.find((c) => c.id === campaignId);
+    if (!template || !campaign) return;
+    (["direct", "ota"] as AudienceKey[]).forEach((audience) => {
+      const email = campaign.variants[audience].email;
+      email.templateId = template.id;
+      email.layout = template.layout;
+      email.subject = template.heading;
+      email.heading = template.heading;
+      email.body = template.body;
+      email.ctaLabel = template.ctaLabel;
+    });
+  });
+}
+
+/** Creates a new template from an existing one, ready for editing. */
+export function duplicateTemplate(templateId: string): string | null {
+  const source = state.templates.find((t) => t.id === templateId);
+  if (!source) return null;
+  const id = uid();
+  mutate((draft) => {
+    draft.templates.push({ ...source, id, name: `${source.name} copy` });
+  });
+  return id;
+}
