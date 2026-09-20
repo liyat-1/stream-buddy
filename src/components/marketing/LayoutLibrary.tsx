@@ -115,7 +115,19 @@ export function LayoutThumb({
       )}
       {layout === "headline_first" && (<><div className="h-2 w-4/5 rounded-sm bg-muted-foreground/45" />{line}{short}{img("mt-0.5 h-8 w-full rounded-sm")}{btn}</>)}
       {layout === "cta_focus" && (<><div className="h-2 w-3/4 rounded-sm bg-muted-foreground/45" />{line}<div className="flex flex-1 items-center gap-1">{img("h-full w-1/3 rounded-sm")}<div className="flex flex-1 justify-center">{btn}</div></div></>)}
+
+      {layout === "newsletter_grid" && (<><div className="h-1.5 w-1/2 self-center rounded-sm bg-muted-foreground/45" />{img("h-4 w-full rounded-sm")}{short}<div className="grid flex-1 grid-cols-2 gap-1 rounded-sm p-1" style={{ background: accent }}>{[0,1,2,3].map((i)=>(<span key={i} className="overflow-hidden rounded-[2px]">{img("size-full")}</span>))}</div></>)}
+      {layout === "logo_header" && (<><div className="h-1.5 w-1/2 self-center rounded-sm bg-muted-foreground/45" />{img("h-7 w-full rounded-sm")}{line}{short}{btn}</>)}
+      {layout === "centered_invite" && (<div className="flex flex-1 flex-col items-center justify-center gap-1"><span className="h-px w-8" style={{ background: accent }} /><div className="h-2 w-3/4 rounded-sm bg-muted-foreground/45" /><div className="h-1.5 w-1/2 rounded-sm bg-muted-foreground/20" /><span className="h-px w-8" style={{ background: accent }} /><div className="h-3 w-11 rounded-sm border text-center text-[5px] leading-3" style={{ borderColor: accent, color: accent }}>CTA</div></div>)}
+      {layout === "offer_first" && (<><div className="grid h-6 place-items-center rounded-sm text-[7px] font-black text-white" style={{ background: accent }}>OFFER</div>{img("h-4 w-full rounded-sm")}{line}{btn}</>)}
+      {layout === "two_column_cards" && (<>{img("h-5 w-full rounded-sm")}{short}<div className="flex flex-1 gap-1">{[0,1].map((i)=>(<span key={i} className="flex-1 overflow-hidden rounded-sm ring-1 ring-border">{img("size-full")}</span>))}</div>{btn}</>)}
+      {layout === "postcard" && (<>{img("h-7 w-full rounded-sm")}<div className="flex flex-1 gap-1"><div className="flex flex-1 flex-col gap-1">{line}{short}{btn}</div><div className="w-5 border-l border-dashed border-border" /></div></>)}
+      {layout === "list_highlights" && (<><div className="h-2 w-3/4 rounded-sm bg-muted-foreground/45" />{[0,1,2].map((i)=>(<div key={i} className="flex items-center gap-1"><span className="size-2 rounded-full" style={{ background: accent }} /><span className="h-1.5 flex-1 rounded-sm bg-muted-foreground/20" /></div>))}{btn}</>)}
+      {layout === "magazine" && (<div className="flex flex-1 gap-1">{img("w-2/5 rounded-sm")}<div className="flex flex-1 flex-col gap-1"><div className="h-2 w-4/5 rounded-sm bg-muted-foreground/45" /><div className="border-l-2 pl-1" style={{ borderColor: accent }}><span className="block h-1.5 w-full rounded-sm bg-muted-foreground/20" /></div>{short}{btn}</div></div>)}
+      {layout === "dark_luxe" && (<div className="flex flex-1 flex-col items-center justify-center gap-1 rounded-sm bg-[#111827] p-1.5"><div className="h-1.5 w-2/3 rounded-sm bg-white/70" /><div className="h-1.5 w-1/2 rounded-sm bg-white/30" />{img("h-4 w-full rounded-sm")}<div className="h-2.5 w-10 rounded-sm bg-white" /></div>)}
+      {layout === "stay_receipt" && (<><div className="h-2 w-3/4 rounded-sm bg-muted-foreground/45" /><div className="flex-1 space-y-[2px] rounded-sm ring-1 ring-border">{[0,1,2].map((i)=>(<div key={i} className={`flex justify-between px-1 py-[3px] ${i%2?"bg-muted/50":""}`}><span className="h-1 w-6 rounded-sm bg-muted-foreground/35" /><span className="h-1 w-4 rounded-sm bg-muted-foreground/20" /></div>))}</div>{btn}</>)}
     </div>
+
   );
 }
 
