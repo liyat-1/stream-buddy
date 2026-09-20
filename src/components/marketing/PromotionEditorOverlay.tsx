@@ -18,8 +18,23 @@ import {
 
 /** Tiny schematic that hints at each banner layout. */
 function TemplateGlyph({ id, swatch }: { id: string; swatch: string }) {
+  const referenceGlyph =
+    id === "neon-ticket" ? "▰" :
+    id === "tape-sale" ? "50%" :
+    id === "coupon-note" ? "⌑" :
+    id === "stacked-poster" ? "15%" :
+    id === "classic-voucher" ? "券" :
+    id === "fashion-sale" ? "70%" :
+    id === "split-sale" ? "40%" :
+    id === "type-coupon" ? "15%" :
+    id === "gift-offer" ? "🎁" : null;
   return (
     <div className="flex h-12 items-center justify-center rounded-sm border border-border bg-muted/40 p-1.5">
+      {referenceGlyph && (
+        <div className="grid size-full place-items-center overflow-hidden rounded-[2px] border border-border bg-card">
+          <span className="text-[15px] font-black leading-none" style={{ color: swatch }}>{referenceGlyph}</span>
+        </div>
+      )}
       {id === "ribbon" && (
         <div className="w-full rotate-[-4deg] rounded-[2px] px-1.5 py-2" style={{ backgroundColor: swatch }}>
           <span className="mx-auto block h-1 w-10 rounded-full bg-white/80" />

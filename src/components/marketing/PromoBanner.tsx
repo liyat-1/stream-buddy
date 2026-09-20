@@ -1,3 +1,4 @@
+import { Gift, Sparkles, Tag } from "lucide-react";
 import {
   BANNER_THEMES,
   CODE_TYPE_LABEL,
@@ -282,6 +283,133 @@ function IncludedBanner({ ctx }: { ctx: BannerCtx }) {
   );
 }
 
+function NeonTicketBanner({ ctx }: { ctx: BannerCtx }) {
+  const { kicker, propertyName, headline, promotion } = ctx;
+  return (
+    <div className="relative min-h-[320px] overflow-hidden bg-zinc-950 px-6 py-7 text-white">
+      <Tag className="absolute left-7 top-7 size-10 rotate-[-12deg] rounded-full bg-cyan-400 p-2 text-zinc-950" />
+      <div className="absolute -right-5 -top-6 grid size-28 place-items-center [clip-path:polygon(50%_0%,59%_13%,72%_5%,77%_20%,93%_18%,89%_34%,100%_43%,87%_53%,94%_67%,78%_69%,76%_85%,62%_78%,51%_92%,41%_78%,26%_86%,22%_70%,6%_67%,14%_52%,1%_42%,15%_33%,10%_18%,27%_20%,32%_4%,43%_14%)] bg-fuchsia-400 text-4xl font-black text-white">%</div>
+      <p className="text-center text-[12px] font-bold uppercase tracking-[0.25em]">{kicker}</p>
+      <div className="relative mx-auto mt-8 max-w-[300px] bg-gradient-to-br from-yellow-100 via-cyan-100 to-violet-200 px-7 py-8 text-zinc-950 [clip-path:polygon(7%_0,93%_0,95%_8%,100%_10%,96%_16%,100%_22%,96%_28%,100%_34%,96%_40%,100%_46%,96%_52%,100%_58%,96%_64%,100%_70%,96%_76%,100%_82%,95%_88%,93%_100%,7%_100%,5%_92%,0_90%,4%_84%,0_78%,4%_72%,0_66%,4%_60%,0_54%,4%_48%,0_42%,4%_36%,0_30%,4%_24%,0_18%,4%_12%,5%_7%)]">
+        <p className="text-center font-serif text-[26px] font-black uppercase leading-[0.95]">{headline}</p>
+        <div className="mt-7 flex items-end justify-between gap-3"><span className="h-8 w-28 bg-[repeating-linear-gradient(90deg,currentColor_0_2px,transparent_2px_5px)]" /><span className="text-[8px] tracking-[0.2em]">{promotion.code}</span></div>
+      </div>
+      <p className="mt-8 text-center text-[11px] uppercase tracking-[0.18em]">{promotion.endsAt ? `Until ${promotionValidity(promotion as Promotion).replace("Ends ", "")}` : propertyName}</p>
+      <Sparkles className="absolute bottom-12 right-10 size-7 text-amber-300" />
+    </div>
+  );
+}
+
+function TapeSaleBanner({ ctx }: { ctx: BannerCtx }) {
+  const { kicker, propertyName, promotion } = ctx;
+  return (
+    <div className="relative min-h-[330px] overflow-hidden bg-red-700 px-6 py-8 text-center text-white">
+      <p className="text-[11px] font-bold uppercase">{kicker}</p>
+      <p className="mt-2 text-[82px] font-black leading-[0.78]">{promotion.discountPercent ?? 50}%</p>
+      <p className="text-[66px] font-black leading-none">OFF</p>
+      <div className="absolute inset-x-[-12%] top-[45%] rotate-[-5deg] bg-amber-400 py-1.5 text-[10px] font-bold uppercase text-white">{propertyName} · {promotion.name} · {propertyName} · {promotion.name}</div>
+      <p className="mt-4 text-[24px] font-black uppercase">{promotion.tagline || "Your next stay"}</p>
+      <span className="mt-6 inline-block bg-amber-400 px-5 py-2 text-[11px] font-bold uppercase">Use {promotion.code}</span>
+      <p className="mt-3 text-[10px] font-semibold uppercase">{promotionValidity(promotion as Promotion)}</p>
+    </div>
+  );
+}
+
+function CouponNoteBanner({ ctx }: { ctx: BannerCtx }) {
+  const { headline, promotion } = ctx;
+  return (
+    <div className="grid min-h-[260px] place-items-center bg-card px-7 py-10 text-center">
+      <div className="relative w-full max-w-[280px] rounded-2xl border-2 border-sky-500 bg-card px-6 py-8 shadow-[10px_10px_0_0_var(--color-brand-soft)] before:absolute before:-left-3 before:top-1/2 before:size-6 before:-translate-y-1/2 before:rounded-full before:border-r-2 before:border-sky-500 before:bg-card after:absolute after:-right-3 after:top-1/2 after:size-6 after:-translate-y-1/2 after:rounded-full after:border-l-2 after:border-sky-500 after:bg-card">
+        <p className="text-[22px] font-bold leading-tight text-foreground">{headline}</p>
+        <p className="mt-6 text-[11px] text-muted-foreground">Use {CODE_TYPE_LABEL[promotion.codeType ?? "promo"].toLowerCase()}:</p>
+        <div className="my-4 border-t border-dashed border-border" />
+        <p className="font-mono text-[18px] tracking-wide text-foreground">{promotion.code}</p>
+      </div>
+    </div>
+  );
+}
+
+function StackedPosterBanner({ ctx }: { ctx: BannerCtx }) {
+  const { kicker, headline, promotion } = ctx;
+  return (
+    <div className="relative min-h-[350px] overflow-hidden bg-cyan-100 px-8 py-7 text-center text-zinc-800">
+      <p className="text-[9px] font-bold uppercase tracking-[0.28em]">{kicker}</p>
+      <p className="mt-4 text-[15px] font-bold uppercase tracking-[0.25em]">{headline}</p>
+      <div className="mx-auto mt-4 max-w-[300px] bg-rose-400 px-3 pb-6 pt-3 text-white [clip-path:polygon(0_7%,12%_3%,12%_0,21%_7%,43%_0,52%_7%,66%_0,78%_7%,89%_0,100%_9%,100%_100%,0_100%)]">
+        <p className="text-[76px] font-black leading-[0.83] [text-shadow:-9px_8px_0_rgba(120,55,85,.35)]">{promotion.discountPercent ?? 15}%</p>
+        <p className="text-[70px] font-black leading-[0.9]">OFF</p>
+        <p className="mt-2 text-[18px] font-bold uppercase tracking-[0.22em]">{promotion.name}</p>
+        <p className="mt-5 text-[10px] font-semibold tracking-[0.15em]">USE CODE: {promotion.code}</p>
+        <span className="mt-5 inline-block bg-card px-8 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-800">Book now →</span>
+      </div>
+    </div>
+  );
+}
+
+function ClassicVoucherBanner({ ctx }: { ctx: BannerCtx }) {
+  const { headline, kicker, propertyName, promotion } = ctx;
+  return (
+    <div className="min-h-[340px] bg-slate-400 px-7 py-8 text-center text-stone-100">
+      <p className="text-[12px] font-semibold">{propertyName}</p>
+      <p className="mt-2 font-serif text-[28px] font-bold uppercase">{headline}</p>
+      <div className="mx-auto mt-8 flex max-w-[330px] rotate-[-3deg] bg-stone-100 text-slate-500 [clip-path:polygon(3%_0,97%_0,100%_8%,97%_16%,100%_24%,97%_32%,100%_40%,97%_48%,100%_56%,97%_64%,100%_72%,97%_80%,100%_88%,97%_100%,3%_100%,0_90%,3%_82%,0_74%,3%_66%,0_58%,3%_50%,0_42%,3%_34%,0_26%,3%_18%,0_10%)]">
+        <div className="flex-1 px-5 py-7"><p className="text-[11px] font-bold uppercase italic">{kicker}</p><p className="mt-2 font-serif text-[54px] leading-none">{promotion.discountPercent ? `${promotion.discountPercent}%` : promotion.code}</p><p className="mt-3 text-[9px]">{promotionValidity(promotion as Promotion)}</p></div>
+        <div className="grid w-20 place-items-center border-l-2 border-dashed border-slate-400"><span className="grid size-14 place-items-center rounded-full bg-slate-500 text-[15px] font-bold text-stone-100">GET</span></div>
+      </div>
+      <p className="mt-9 text-right font-serif text-[12px]">{promotion.detail}</p>
+    </div>
+  );
+}
+
+function FashionSaleBanner({ ctx }: { ctx: BannerCtx }) {
+  const { kicker, propertyName, promotion } = ctx;
+  return (
+    <div className="bg-card px-6 py-7 text-center text-foreground">
+      <p className="font-serif text-[23px]">{propertyName}</p>
+      <div className="mt-6 bg-muted px-5 py-8">
+        <p className="text-[10px] font-bold uppercase tracking-[0.28em]">{kicker}</p>
+        <p className="mt-2 font-serif text-[20px] italic">take</p>
+        <div className="flex items-center justify-center"><span className="text-[88px] font-black leading-none">{promotion.discountPercent ?? 70}</span><span className="text-left text-[35px] font-black leading-[0.8]">%<br/><small className="text-[21px]">OFF</small></span></div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.28em]">{promotion.name}</p>
+        <p className="mx-auto mt-5 max-w-[250px] text-[9px] uppercase tracking-[0.18em]">{promotion.detail}</p>
+        <span className="mt-6 inline-block border-2 border-foreground px-6 py-2 text-[11px] font-bold uppercase tracking-[0.18em]">Use {promotion.code}</span>
+      </div>
+    </div>
+  );
+}
+
+function SplitSaleBanner({ ctx }: { ctx: BannerCtx }) {
+  const { headline, kicker, promotion } = ctx;
+  return (
+    <div className="relative min-h-[220px] bg-red-600 p-5 text-stone-100"><div className="flex min-h-[180px] items-center border border-stone-100/70 px-6 py-5">
+      <div className="w-1/2 border-r border-stone-100/70 pr-5"><p className="font-serif text-[34px] uppercase leading-[0.9]">{kicker}</p><p className="font-serif text-[32px] italic">Only!</p></div>
+      <div className="w-1/2 pl-6"><p className="font-serif text-[16px] italic">extra</p><p className="font-serif text-[64px] leading-[0.75]">{promotion.discountPercent ?? 40}%</p><p className="font-serif text-[18px] uppercase">Off {headline}</p></div>
+      <span className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-card px-6 py-1 text-[9px] font-bold uppercase text-red-600">{promotion.code}</span>
+    </div></div>
+  );
+}
+
+function TypeCouponBanner({ ctx }: { ctx: BannerCtx }) {
+  const { promotion } = ctx;
+  return (
+    <div className="min-h-[340px] bg-stone-100 px-6 py-6 text-zinc-950">
+      <div className="flex items-center gap-4"><span className="h-4 flex-1 bg-zinc-950 [clip-path:polygon(0_25%,85%_25%,85%_0,100%_50%,85%_100%,85%_75%,0_75%)]"/><span className="text-[10px] tracking-wide">{promotion.code}</span><span className="h-4 flex-1 rotate-180 bg-zinc-950 [clip-path:polygon(0_25%,85%_25%,85%_0,100%_50%,85%_100%,85%_75%,0_75%)]"/></div>
+      <p className="mt-5 text-[104px] font-black leading-[0.74] tracking-tight">{promotion.discountPercent ?? 15}%</p>
+      <div className="mt-5 grid grid-cols-[1fr_1.35fr] items-stretch"><div className="grid aspect-square place-items-center rounded-full border-[14px] border-zinc-950 p-3 text-center text-[14px] leading-tight">Your<br/>one-time<br/>{CODE_TYPE_LABEL[promotion.codeType ?? "promo"]}</div><p className="text-[108px] font-black leading-[0.68]">OFF</p></div>
+    </div>
+  );
+}
+
+function GiftOfferBanner({ ctx }: { ctx: BannerCtx }) {
+  const { kicker, headline, promotion } = ctx;
+  return (
+    <div className="bg-stone-100 p-4"><div className="min-h-[300px] bg-sky-950 px-6 py-7 text-center text-stone-100">
+      <p className="text-[12px] uppercase tracking-[0.25em]">{kicker}</p>
+      <div className="relative mx-auto mt-8 w-56 pt-16"><div className="absolute left-8 top-0 h-20 w-20 rotate-[-35deg] rounded-[70%_15%] bg-stone-100"/><div className="absolute right-8 top-0 h-20 w-20 rotate-[35deg] rounded-[15%_70%] bg-stone-100"/><div className="relative rounded-b-lg rounded-t-3xl bg-stone-100 px-5 py-5 text-sky-950"><Gift className="mx-auto mb-1 size-5"/><p className="text-[10px] font-bold uppercase tracking-[0.2em]">{headline}</p><p className="mt-1 text-[54px] leading-none">{promotion.discountPercent ?? 25}%</p><p className="text-[44px] leading-none">OFF</p></div></div>
+    </div><div className="px-4 py-5 text-center text-sky-950"><p className="text-[22px] uppercase tracking-[0.22em]">{promotion.name}</p><p className="mt-1 text-[11px] uppercase tracking-[0.2em]">Use {promotion.code}</p></div></div>
+  );
+}
+
 function BannerFooter({ promotion, showCode = true, showDescription = true }: { promotion: BannerPromotion; showCode?: boolean; showDescription?: boolean }) {
   return (
     <div className="space-y-1 border-t border-border/60 px-3.5 py-2.5">
@@ -324,7 +452,25 @@ export function PromoBanner({
   const ctx: BannerCtx = { promotion, kicker, propertyName, headline, theme, logo, photo };
 
   const body =
-    template === "ticket" ? (
+    template === "neon-ticket" ? (
+      <NeonTicketBanner ctx={ctx} />
+    ) : template === "tape-sale" ? (
+      <TapeSaleBanner ctx={ctx} />
+    ) : template === "coupon-note" ? (
+      <CouponNoteBanner ctx={ctx} />
+    ) : template === "stacked-poster" ? (
+      <StackedPosterBanner ctx={ctx} />
+    ) : template === "classic-voucher" ? (
+      <ClassicVoucherBanner ctx={ctx} />
+    ) : template === "fashion-sale" ? (
+      <FashionSaleBanner ctx={ctx} />
+    ) : template === "split-sale" ? (
+      <SplitSaleBanner ctx={ctx} />
+    ) : template === "type-coupon" ? (
+      <TypeCouponBanner ctx={ctx} />
+    ) : template === "gift-offer" ? (
+      <GiftOfferBanner ctx={ctx} />
+    ) : template === "ticket" ? (
       <TicketBanner ctx={ctx} />
     ) : template === "spotlight" ? (
       <SpotlightBanner ctx={ctx} />

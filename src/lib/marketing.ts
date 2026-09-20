@@ -234,6 +234,15 @@ export type BannerTheme = (typeof BANNER_THEMES)[number];
 
 /** Layout templates for the guest-facing offer banner. */
 export const BANNER_TEMPLATES = [
+  { id: "neon-ticket", label: "Neon ticket", desc: "Dark poster with playful stickers and a luminous offer ticket." },
+  { id: "tape-sale", label: "Tape sale", desc: "Oversized discount typography crossed by a bold sale ribbon." },
+  { id: "coupon-note", label: "Coupon note", desc: "A quiet, minimal coupon with a perforated code section." },
+  { id: "stacked-poster", label: "Stacked poster", desc: "Tall geometric discount typography with a direct action." },
+  { id: "classic-voucher", label: "Classic voucher", desc: "A refined paper voucher on a muted editorial background." },
+  { id: "fashion-sale", label: "Fashion sale", desc: "High-contrast editorial type with a restrained action button." },
+  { id: "split-sale", label: "Split sale", desc: "Wide framed composition balancing urgency and discount." },
+  { id: "type-coupon", label: "Type coupon", desc: "Oversized modern type built around the discount and code." },
+  { id: "gift-offer", label: "Gift offer", desc: "A generous gift-box motif for warm, celebratory offers." },
   { id: "ribbon", label: "Ribbon", desc: "Personal sticker with a tilted headline ribbon." },
   { id: "ticket", label: "Ticket", desc: "Ticket stub with a perforated code section." },
   { id: "spotlight", label: "Spotlight", desc: "Photo backdrop with a glowing centred headline." },
