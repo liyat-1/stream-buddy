@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Ban, GripVertical, Info, Layout, Plus, Repeat2, Trash2, X } from "lucide-react";
+import { Ban, Eye, GripVertical, Info, Layout, Plus, Repeat2, Trash2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LayoutThumb } from "./LayoutLibrary";
 import { TemplateLibrary } from "./TemplateLibrary";
+import { MarketingEmailPreview, templateEmailContent } from "./MarketingEmailPreview";
 import { BulkDragChips } from "./BulkDragChips";
 import {
   CAMPAIGN_BULK_DRAG_TYPE,
@@ -51,6 +51,7 @@ export function TemplateDropOverlay({
   const [columns, setColumns] = useState<string[]>(initial.length ? initial : templates.slice(0, 3).map((t) => t.id));
   const [picking, setPicking] = useState<"new" | string | null>(null);
   const [details, setDetails] = useState<string | null>(null);
+  const [preview, setPreview] = useState<EmailTemplate | null>(null);
   const [dragging, setDragging] = useState<string | null>(null);
   const [bulk, setBulk] = useState<BulkScope | null>(null);
   const [over, setOver] = useState<string | null>(null);
@@ -201,18 +202,17 @@ export function TemplateDropOverlay({
                 onDragOver={(event) => { allow(event); setOver(templateId); }}
                 onDragLeave={() => setOver((c) => (c === templateId ? null : c))}
                 onDrop={(event) => dropOn(event, templateId)}
-                className={`flex min-w-[268px] flex-1 flex-col rounded-xl border p-4 transition-colors ${
+                 className={`flex min-w-[300px] max-w-[340px] flex-1 flex-col rounded-lg border bg-card p-3 transition-colors ${
                   over === templateId
                     ? "border-brand bg-brand-soft ring-2 ring-brand/30"
-                    : "border-brand/30 bg-brand-soft/25"
+                     : "border-border"
                 }`}
               >
-                <div className="border-b border-border pb-3">
-                  <LayoutThumb layout={template.layout} accent={template.accent} photo={template.hero} />
-                  <p className="mt-2 truncate text-[12.5px] font-semibold text-card-foreground">{template.name}</p>
-                  <p className="truncate text-[10.5px] text-muted-foreground">
+                 <div className="border-b border-border pb-3">
+                   <div className="flex items-start gap-2"><div className="min-w-0 flex-1"><p className="truncate text-[13px] font-semibold text-card-foreground">{template.name}</p><p className="truncate text-[10.5px] text-muted-foreground">
                     {template.category} · {rows.length} campaign{rows.length === 1 ? "" : "s"}
-                  </p>
+                   </p></div><Button variant="ghost" size="icon" className="size-8" aria-label={`Preview ${template.name}`} title="Preview full template" onClick={() => setPreview(template)}><Eye size={15} /></Button></div>
+                   <div className="mt-3 h-52 overflow-hidden rounded-md border border-border bg-muted p-2"><div className="origin-top-left scale-[0.42]" style={{ width: "238%" }}><MarketingEmailPreview value={templateEmailContent(template)} template={template} className="rounded-none shadow-none" /></div></div>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     <Button variant="outline" size="sm" className="h-7 px-2 text-[11px]" onClick={() => setPicking(templateId)}>
                       <Repeat2 size={12} />
@@ -276,6 +276,7 @@ export function TemplateDropOverlay({
         onClose={() => setPicking(null)}
         onSelect={choose}
       />
+      {preview && <div className="fixed inset-0 z-[80] grid place-items-center bg-foreground/65 p-4" onMouseDown={(event) => event.target === event.currentTarget && setPreview(null)}><section role="dialog" aria-modal="true" className="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-lg border border-border bg-card shadow-float"><header className="flex items-center justify-between border-b border-border px-5 py-3"><div><p className="text-[15px] font-semibold text-card-foreground">{preview.name}</p><p className="text-[11.5px] text-muted-foreground">Full template preview</p></div><Button variant="ghost" size="icon" aria-label="Close preview" onClick={() => setPreview(null)}><X size={17} /></Button></header><div className="min-h-0 overflow-y-auto bg-muted p-5"><MarketingEmailPreview value={templateEmailContent(preview)} template={preview} /></div></section></div>}
     </div>
   );
 }

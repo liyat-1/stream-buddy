@@ -3,6 +3,7 @@ import { Check, Gift, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useMarketing } from "@/lib/marketing";
+import { PromoBanner } from "./PromoBanner";
 
 export function PromotionSelector({
   open,
@@ -32,7 +33,7 @@ export function PromotionSelector({
 
   return (
     <Dialog open={open} onOpenChange={(value) => !value && onClose()}>
-      <DialogContent overlayClassName="z-[80]" className="z-[81] max-h-[86vh] max-w-2xl overflow-hidden border-border bg-card p-0 shadow-float">
+      <DialogContent overlayClassName="z-[80]" className="z-[81] max-h-[90vh] max-w-4xl overflow-hidden border-border bg-card p-0 shadow-float">
         <DialogHeader className="border-b border-border px-5 py-4 pr-12">
           <DialogTitle className="text-[16px]">Promotion for {campaignName}</DialogTitle>
           <DialogDescription>Select the offer you’d like to include in this campaign.</DialogDescription>
@@ -49,11 +50,11 @@ export function PromotionSelector({
             />
           </div>
 
-          <div className="mt-4 space-y-2">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {allowInherit && (
               <button
                 onClick={() => { onSelect("inherit"); onClose(); }}
-                className={`flex w-full items-start gap-3 rounded-md border p-3 text-left transition-colors ${
+                 className={`flex w-full items-start gap-3 rounded-md border p-3 text-left transition-colors sm:col-span-2 ${
                   selectedId === "inherit" ? "border-brand bg-brand-soft" : "border-border bg-background hover:border-brand/50"
                 }`}
               >
@@ -71,23 +72,26 @@ export function PromotionSelector({
             {results.map((promotion) => {
               const active = promotion.id === selectedId;
               return (
-                <button
+                 <button
                   key={promotion.id}
                   onClick={() => {
                     onSelect(promotion.id);
                     onClose();
                   }}
-                  className={`flex w-full items-start gap-3 rounded-md border p-3 text-left transition-colors ${
+                   className={`overflow-hidden rounded-md border text-left transition-colors ${
                     active ? "border-brand bg-brand-soft" : "border-border bg-background hover:border-brand/50"
                   }`}
                 >
-                  <span className={`mt-0.5 grid size-8 shrink-0 place-items-center rounded-md ${active ? "bg-brand text-brand-foreground" : "bg-muted text-muted-foreground"}`}>
-                    {active ? <Check size={15} /> : <Gift size={15} />}
-                  </span>
-                  <span className="min-w-0 flex-1">
+                   <span className="block h-44 overflow-hidden bg-muted p-2">
+                     <PromoBanner promotion={promotion} property="Holiday Inn Times Square" className="origin-top scale-[0.72] shadow-none" />
+                   </span>
+                   <span className="flex items-start gap-3 border-t border-border p-3">
+                     <span className={`mt-0.5 grid size-8 shrink-0 place-items-center rounded-md ${active ? "bg-brand text-brand-foreground" : "bg-muted text-muted-foreground"}`}>{active ? <Check size={15} /> : <Gift size={15} />}</span>
+                     <span className="min-w-0 flex-1">
                     <span className="block text-[13px] font-semibold text-card-foreground">{promotion.name}</span>
                     <span className="mt-0.5 block text-[11.5px] leading-relaxed text-muted-foreground">{promotion.detail}</span>
                     {promotion.code && <span className="mt-1 block text-[10.5px] font-semibold text-brand">Code {promotion.code}</span>}
+                     </span>
                   </span>
                 </button>
               );
