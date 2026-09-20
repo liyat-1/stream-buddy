@@ -50,7 +50,18 @@ export type EmailLayout =
   | "image_left"
   | "image_right"
   | "headline_first"
-  | "cta_focus";
+  | "cta_focus"
+  | "newsletter_grid"
+  | "logo_header"
+  | "centered_invite"
+  | "offer_first"
+  | "two_column_cards"
+  | "postcard"
+  | "list_highlights"
+  | "magazine"
+  | "dark_luxe"
+  | "stay_receipt";
+
 
 export const LAYOUT_PRESETS: {
   value: EmailLayout;
