@@ -33,13 +33,13 @@ export function PromotionSelector({
 
   return (
     <Dialog open={open} onOpenChange={(value) => !value && onClose()}>
-      <DialogContent overlayClassName="z-[80]" className="z-[81] max-h-[90vh] max-w-4xl overflow-hidden border-border bg-card p-0 shadow-float">
+      <DialogContent overlayClassName="z-[80]" className="z-[81] flex h-[calc(100dvh-1.5rem)] max-w-4xl flex-col gap-0 overflow-hidden border-border bg-card p-0 shadow-float sm:h-[calc(100dvh-3rem)]">
         <DialogHeader className="border-b border-border px-5 py-4 pr-12">
           <DialogTitle className="text-[16px]">Promotion for {campaignName}</DialogTitle>
           <DialogDescription>Select the offer you’d like to include in this campaign.</DialogDescription>
         </DialogHeader>
 
-        <div className="min-h-0 overflow-y-auto p-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5">
           <div className="relative">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -82,8 +82,10 @@ export function PromotionSelector({
                     active ? "border-brand bg-brand-soft" : "border-border bg-background hover:border-brand/50"
                   }`}
                 >
-                   <span className="block h-44 overflow-hidden bg-muted p-2">
-                     <PromoBanner promotion={promotion} property="Holiday Inn Times Square" className="origin-top scale-[0.72] shadow-none" />
+                    <span className="block h-64 overflow-hidden bg-muted p-2">
+                      <span className="block origin-top-left scale-[0.58]" style={{ width: "172.5%" }}>
+                        <PromoBanner promotion={promotion} property="Holiday Inn Times Square" className="shadow-none" />
+                      </span>
                    </span>
                    <span className="flex items-start gap-3 border-t border-border p-3">
                      <span className={`mt-0.5 grid size-8 shrink-0 place-items-center rounded-md ${active ? "bg-brand text-brand-foreground" : "bg-muted text-muted-foreground"}`}>{active ? <Check size={15} /> : <Gift size={15} />}</span>

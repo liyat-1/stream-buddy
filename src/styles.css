@@ -66,6 +66,14 @@
   --color-brand-soft: var(--brand-soft);
   --color-warning: var(--warning);
   --color-warning-soft: var(--warning-soft);
+  --color-email-paper: var(--email-paper);
+  --color-email-ink: var(--email-ink);
+  --color-email-warm: var(--email-warm);
+  --color-email-forest: var(--email-forest);
+  --color-email-ocean: var(--email-ocean);
+  --color-email-clay: var(--email-clay);
+  --color-email-gold: var(--email-gold);
+  --color-email-on-dark: var(--email-on-dark);
   --font-sans: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --shadow-card: 0 1px 2px oklch(0.2 0.02 264 / 0.05), 0 1px 3px oklch(0.2 0.02 264 / 0.06);
   --shadow-lift: 0 12px 28px -14px oklch(0.2 0.02 264 / 0.22), 0 2px 6px -2px oklch(0.2 0.02 264 / 0.1);
@@ -112,6 +120,14 @@
   --brand-soft: oklch(0.955 0.026 255);
   --warning: oklch(0.55 0.16 65);
   --warning-soft: oklch(0.96 0.045 78);
+  --email-paper: oklch(0.97 0.018 82);
+  --email-ink: oklch(0.24 0.025 55);
+  --email-warm: oklch(0.91 0.04 73);
+  --email-forest: oklch(0.28 0.045 151);
+  --email-ocean: oklch(0.33 0.09 237);
+  --email-clay: oklch(0.48 0.08 49);
+  --email-gold: oklch(0.69 0.1 78);
+  --email-on-dark: oklch(0.97 0.012 83);
 }
 
 .dark {
@@ -153,6 +169,14 @@
   --brand-soft: oklch(0.28 0.05 255);
   --warning: oklch(0.78 0.14 75);
   --warning-soft: oklch(0.28 0.055 65);
+  --email-paper: oklch(0.24 0.02 70);
+  --email-ink: oklch(0.94 0.014 82);
+  --email-warm: oklch(0.34 0.04 65);
+  --email-forest: oklch(0.64 0.08 151);
+  --email-ocean: oklch(0.68 0.09 237);
+  --email-clay: oklch(0.69 0.08 49);
+  --email-gold: oklch(0.76 0.1 78);
+  --email-on-dark: oklch(0.97 0.012 83);
 }
 
 @layer base {

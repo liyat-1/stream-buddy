@@ -37,8 +37,8 @@ export function TemplateLibrary({
     );
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-foreground/45 p-4 backdrop-blur-[2px]">
-       <div className="flex max-h-[92vh] w-full max-w-6xl flex-col overflow-hidden rounded-lg border border-border bg-card shadow-float">
+    <div className="fixed inset-0 z-[70] flex items-center justify-center overflow-y-auto bg-foreground/45 p-3 backdrop-blur-[2px] sm:p-5">
+       <div className="flex h-[calc(100dvh-1.5rem)] w-full max-w-6xl flex-col overflow-hidden rounded-lg border border-border bg-card shadow-float sm:h-[calc(100dvh-2.5rem)]">
         <div className="flex items-start justify-between gap-4 border-b border-border px-5 py-3.5">
           <div className="min-w-0">
             <h2 className="text-[15px] font-semibold tracking-tight text-card-foreground">Template library</h2>
@@ -81,7 +81,7 @@ export function TemplateLibrary({
           </div>
         </div>
 
-         <div className="grid min-h-0 flex-1 gap-5 overflow-y-auto p-5 sm:grid-cols-2 lg:grid-cols-3">
+         <div className="grid min-h-0 flex-1 content-start gap-5 overflow-y-auto overscroll-contain p-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((t) => {
             const active = t.id === selectedId;
             return (
@@ -91,8 +91,8 @@ export function TemplateLibrary({
                   active ? "border-brand ring-2 ring-brand/25" : "border-border hover:border-brand/45"
                 }`}
               >
-                <div className="relative h-[330px] overflow-hidden bg-muted p-4">
-                  <div className="mx-auto h-full max-w-[230px] overflow-hidden rounded-sm bg-background shadow-card ring-1 ring-border/70">
+                 <div className="relative h-[430px] overflow-hidden bg-muted p-4">
+                   <div className="mx-auto h-full max-w-[230px] overflow-hidden rounded-sm bg-background shadow-card ring-1 ring-border/70">
                     <div className="origin-top-left scale-[0.5]" style={{ width: "200%" }}>
                       <MarketingEmailPreview value={templateEmailContent(t)} template={t} className="rounded-none border-0 shadow-none" />
                     </div>
@@ -125,10 +125,10 @@ export function TemplateLibrary({
         </div>
       </div>
       {preview && (
-        <div className="fixed inset-0 z-[90] grid place-items-center bg-foreground/65 p-4" onMouseDown={(event) => event.target === event.currentTarget && setPreview(null)}>
-          <section role="dialog" aria-modal="true" aria-label={`${preview.name} preview`} className="flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-lg border border-border bg-card shadow-float">
+         <div className="fixed inset-0 z-[90] grid place-items-center overflow-y-auto bg-foreground/65 p-3 sm:p-5" onMouseDown={(event) => event.target === event.currentTarget && setPreview(null)}>
+           <section role="dialog" aria-modal="true" aria-label={`${preview.name} preview`} className="flex h-[calc(100dvh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-lg border border-border bg-card shadow-float sm:h-[calc(100dvh-2.5rem)]">
             <header className="flex items-center justify-between border-b border-border px-5 py-3"><div><p className="text-[15px] font-semibold text-card-foreground">{preview.name}</p><p className="text-[11.5px] text-muted-foreground">Full email preview</p></div><Button variant="ghost" size="icon" aria-label="Close preview" onClick={() => setPreview(null)}><X size={17} /></Button></header>
-            <div className="min-h-0 overflow-y-auto bg-muted p-5"><MarketingEmailPreview value={templateEmailContent(preview)} template={preview} /></div>
+             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-muted p-5"><MarketingEmailPreview value={templateEmailContent(preview)} template={preview} /></div>
             <footer className="flex justify-end gap-2 border-t border-border px-5 py-3"><Button variant="outline" onClick={() => setPreview(null)}>Close</Button><Button variant="brand" onClick={() => { onSelect(preview); setPreview(null); onClose(); }}>Use template</Button></footer>
           </section>
         </div>
