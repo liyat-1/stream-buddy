@@ -146,6 +146,9 @@ export function EmailPreview({ value, promotion }: { value: EmailContent; promot
           </span>
         </div>
       )}
+        </>
+      )}
+
 
       <div className="border-t border-border px-6 py-4 text-[11px] text-muted-foreground">
         Holiday Inn New York City – Times Square · Unsubscribe
