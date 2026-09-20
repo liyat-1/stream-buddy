@@ -5,6 +5,8 @@ import { TemplateLibrary } from "./TemplateLibrary";
 import { EmojiPicker } from "./EmojiPicker";
 import { LayoutLibrary, LayoutThumb } from "./LayoutLibrary";
 import { PromoBanner } from "./PromoBanner";
+import { RichEmailLayout, isRichLayout } from "./EmailLayouts";
+
 import {
   LAYOUT_LABEL,
   LAYOUT_PRESETS,
