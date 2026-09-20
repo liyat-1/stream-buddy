@@ -84,6 +84,7 @@ export function CampaignEditor({ id, onClose }: { id: string; onClose: () => voi
   const [panel, setPanel] = useState<Panel>(null);
   const [confirm, setConfirm] = useState<"leave" | "save" | "revert" | null>(null);
   const [promotionPicker, setPromotionPicker] = useState(false);
+  const [landingOpened, setLandingOpened] = useState(false);
   const dirty = useMemo(() => draft ? JSON.stringify(draft) !== baseline : false, [draft, baseline]);
 
   useEffect(() => {
@@ -325,8 +326,9 @@ export function CampaignEditor({ id, onClose }: { id: string; onClose: () => voi
                   sender="Holiday Inn"
                   scale={0.62}
                   promotion={activePromotion}
+                   onOpenLanding={() => setLandingOpened(true)}
                 />
-                 <div>
+                 <div className={`transition-all duration-300 ${landingOpened ? "scale-[1.01]" : ""}`}>
                    <p className="mb-2 text-center text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Link destination</p>
                    <LandingPreview campaignName={draft.name} purpose={draft.purpose} timing={draft.timing} heading={variant.email.heading} body={variant.email.body || variant.text.message} imageUrl={previewMedia?.url ?? null} promotion={activePromotion} scale={0.55} />
                  </div>
