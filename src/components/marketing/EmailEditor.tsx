@@ -74,7 +74,19 @@ export function EmailPreview({ value, promotion }: { value: EmailContent; promot
         <p className="mt-0.5 text-[12px] text-muted-foreground">{renderPreview(value.preheader)}</p>
       </div>
 
+      {isRichLayout(layout) ? (
+        <RichEmailLayout
+          value={value}
+          layout={layout}
+          accent={accent}
+          heroOf={heroOf}
+          offer={offer}
+          property="Holiday Inn Times Square"
+        />
+      ) : (
+        <>
       {(layout === "hero_top" || layout === "gallery_three") && <Banner photo={heroOf(0)} height={140} />}
+
 
       {layout === "full_bleed" ? (
         <div className="relative px-6 py-12 text-center">
