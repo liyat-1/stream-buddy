@@ -497,6 +497,7 @@ const TEMPLATES: EmailTemplate[] = [
     layout: "headline_first",
     layouts: ["headline_first", "hero_top", "cta_focus", "gallery_two"],
   },
+  ...LAYOUT_TEMPLATES,
 ];
 
 export const FOLDERS = [
@@ -587,6 +588,17 @@ const PROMOTIONS: Promotion[] = [
   { id: "family-kids-stay", name: "Kids stay free", detail: "Up to two children in the same room at no extra cost.", code: "FAMILY0", codeType: "rate", tagline: "👨‍👩‍👧 Kids stay free", bannerStyle: "teal" },
   { id: "longstay-25", name: "25% off long stays", detail: "Five nights or more, booked direct.", code: "LONG25", codeType: "rate", discountPercent: 25, minNights: 5, tagline: "🧳 Stay longer, save more", bannerStyle: "emerald" },
   { id: "welcome-drink", name: "Welcome drink", detail: "A drink at the bar on arrival for every guest.", code: "CHEERS", codeType: "promo", tagline: "🍸 First drink is ours", bannerStyle: "sunset" },
+
+  // Ready-made offers showcasing the new banner designs.
+  { id: "neon-night-25", name: "Neon nights 25% off", detail: "Late-booking rate for city-break guests.", code: "NEON25", codeType: "promo", discountPercent: 25, tagline: "✨ Lights on, rates down", bannerStyle: "plum", bannerTemplate: "neon-ticket", kicker: "YOU UNLOCKED" },
+  { id: "flash-sale-40", name: "Flash sale 40% off", detail: "48-hour flash sale on selected rooms.", code: "FLASH40", codeType: "promo", discountPercent: 40, tagline: "🔥 48 hours only", bannerStyle: "rose", bannerTemplate: "tape-sale", kicker: "LIMITED TIME" },
+  { id: "coupon-15", name: "Guest coupon 15% off", detail: "A simple coupon for returning guests.", code: "GUEST15", codeType: "promo", discountPercent: 15, tagline: "🎟️ A little thank you", bannerStyle: "slate", bannerTemplate: "coupon-note", kicker: "FOR YOU" },
+  { id: "poster-30", name: "Poster sale 30% off", detail: "Seasonal poster offer for direct bookings.", code: "POSTER30", codeType: "promo", discountPercent: 30, tagline: "📣 Season sale", bannerStyle: "sunset", bannerTemplate: "stacked-poster", kicker: "SEASON SALE" },
+  { id: "voucher-dinner", name: "Dinner voucher", detail: "A voucher for dinner for two during the stay.", code: "VOUCHER2", codeType: "promo", tagline: "🍷 Dinner for two", bannerStyle: "emerald", bannerTemplate: "classic-voucher", kicker: "VOUCHER" },
+  { id: "editorial-20", name: "Editorial 20% off", detail: "Editorial-style offer for suite upgrades.", code: "EDIT20", codeType: "promo", discountPercent: 20, tagline: "🖤 Quietly generous", bannerStyle: "slate", bannerTemplate: "fashion-sale", kicker: "MEMBERS" },
+  { id: "split-weekend", name: "Split weekend offer", detail: "Two nights at a reduced weekend rate.", code: "SPLIT2", codeType: "rate", discountPercent: 18, minNights: 2, tagline: "🥂 Two nights, better rate", bannerStyle: "midnight", bannerTemplate: "split-sale", kicker: "WEEKEND" },
+  { id: "type-coupon-10", name: "Type coupon 10% off", detail: "A bold typographic coupon for any stay.", code: "TYPE10", codeType: "promo", discountPercent: 10, tagline: "🔤 Ten percent, simply", bannerStyle: "amber", bannerTemplate: "type-coupon", kicker: "COUPON" },
+  { id: "gift-stay", name: "Gift a stay", detail: "A gift offer guests can pass to friends and family.", code: "GIFTIT", codeType: "promo", tagline: "🎁 A gift from us", bannerStyle: "rose", bannerTemplate: "gift-offer", kicker: "A GIFT FOR YOU" },
 ];
 
 function variantFrom(seed: Seed, key: AudienceKey): Variant {
