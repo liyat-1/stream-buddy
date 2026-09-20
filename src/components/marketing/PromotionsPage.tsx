@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { Copy, Link2, Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { Copy, MoreHorizontal, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { MarketingShell } from "./MarketingShell";
 import { PromotionAssignOverlay } from "./PromotionAssignOverlay";
 import { PromotionEditorOverlay } from "./PromotionEditorOverlay";
 import { PromoBanner } from "./PromoBanner";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,7 +21,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   CODE_TYPE_LABEL,
   CURRENT_USER,
@@ -32,7 +37,6 @@ export function PromotionsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [tab, setTab] = useState<"promotions" | "assignments">("promotions");
   const [query, setQuery] = useState("");
 
   const q = query.trim().toLowerCase();
@@ -42,15 +46,25 @@ export function PromotionsPage() {
   const active = promotions.find((promotion) => promotion.id === managing) ?? null;
   const editTarget = promotions.find((promotion) => promotion.id === editingId) ?? null;
   const deleteTarget = promotions.find((promotion) => promotion.id === deletingId) ?? null;
-  const assignedCampaigns = (promotionId: string) => campaigns.filter((campaign) => {
-    const ids = campaignPromotionIds(campaign);
-    return ids.direct === promotionId || ids.ota === promotionId;
-  });
-  const duplicate = (promotionId: string) => mutate((draft) => {
-    const source = draft.promotions.find((promotion) => promotion.id === promotionId);
-    if (!source) return;
-    draft.promotions.push({ ...source, id: uid(), name: `${source.name} Copy`, updatedBy: { by: CURRENT_USER.name, at: Date.now() } });
-  });
+
+  const assignedCount = (promotionId: string) =>
+    campaigns.filter((campaign) => {
+      const ids = campaignPromotionIds(campaign);
+      return ids.direct === promotionId || ids.ota === promotionId;
+    }).length;
+
+  const duplicate = (promotionId: string) =>
+    mutate((draft) => {
+      const source = draft.promotions.find((promotion) => promotion.id === promotionId);
+      if (!source) return;
+      draft.promotions.push({
+        ...source,
+        id: uid(),
+        name: `${source.name} Copy`,
+        updatedBy: { by: CURRENT_USER.name, at: Date.now() },
+      });
+    });
+
   const remove = () => {
     if (!deleteTarget) return;
     const id = deleteTarget.id;
@@ -83,23 +97,17 @@ export function PromotionsPage() {
             <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Marketing assets</p>
             <h2 className="mt-1 text-[22px] font-semibold text-foreground">Promotions</h2>
             <p className="mt-1 max-w-2xl text-[13px] text-muted-foreground">
-              Create and design every offer here — layout, colour, logo and wording included. Assigning an offer to
-              campaigns is a separate step, so nothing gets mixed up.
+              Every offer in one place — design it, see how many campaigns carry it, and assign it to campaigns from
+              the same row.
             </p>
           </div>
-          {tab === "promotions" && <Button variant="brand" size="sm" onClick={() => setCreating(true)}>
+          <Button variant="brand" size="sm" onClick={() => setCreating(true)}>
             <Plus size={14} />
             New promotion
-          </Button>}
+          </Button>
         </div>
 
-        <Tabs value={tab} onValueChange={(value) => setTab(value as typeof tab)} className="mt-5">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="promotions">Promotions</TabsTrigger>
-            <TabsTrigger value="assignments">Assignments</TabsTrigger>
-          </TabsList>
-
-        <div className="relative mt-4 max-w-sm">
+        <div className="relative mt-5 max-w-sm">
           <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <input
             value={query}
@@ -109,9 +117,9 @@ export function PromotionsPage() {
           />
         </div>
 
-        <TabsContent value="promotions" className="mt-4 space-y-2 pb-16">
+        <div className="mt-4 space-y-2 pb-16">
           {list.map((promotion) => {
-            const count = assignedCampaigns(promotion.id).length;
+            const count = assignedCount(promotion.id);
             return (
               <article
                 key={promotion.id}
@@ -123,13 +131,11 @@ export function PromotionsPage() {
                   onClick={() => setEditingId(promotion.id)}
                   className="relative hidden h-[122px] w-[176px] shrink-0 overflow-hidden rounded-md border border-border bg-muted/30 sm:block"
                 >
-                  <div
-                    className="absolute left-0 top-0 w-[292px] origin-top-left"
-                    style={{ transform: "scale(0.6)" }}
-                  >
+                  <div className="absolute left-0 top-0 w-[292px] origin-top-left" style={{ transform: "scale(0.6)" }}>
                     <PromoBanner promotion={promotion} className="shadow-none" />
                   </div>
                 </button>
+
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-[13.5px] font-semibold text-card-foreground">{promotion.name}</p>
                   <p className="truncate text-[11.5px] text-muted-foreground">
@@ -138,29 +144,57 @@ export function PromotionsPage() {
                   <p className="mt-0.5 truncate text-[10.5px] text-muted-foreground">
                     {CODE_TYPE_LABEL[promotion.codeType ?? "promo"]}
                     {promotion.discountPercent ? ` · ${promotion.discountPercent}% off` : ""}
-                    {promotion.minNights ? ` · min ${promotion.minNights} night${promotion.minNights === 1 ? "" : "s"}` : ""} ·{" "}
-                    {promotionValidity(promotion)}
+                    {promotion.minNights
+                      ? ` · min ${promotion.minNights} night${promotion.minNights === 1 ? "" : "s"}`
+                      : ""}{" "}
+                    · {promotionValidity(promotion)}
                   </p>
-                </div>
-                <div className="flex shrink-0 flex-col items-end gap-1.5">
                   <span
-                    className={`rounded-sm px-2.5 py-1 text-[11px] font-semibold ${
+                    className={`mt-1.5 inline-block rounded-sm px-2 py-0.5 text-[11px] font-semibold ${
                       count ? "bg-brand-soft text-brand" : "bg-muted text-muted-foreground"
                     }`}
                   >
                     {count === 0 ? "No campaigns" : `${count} campaign${count === 1 ? "" : "s"}`}
                   </span>
-                  <div className="flex gap-1.5">
-                    <Button variant="outline" size="icon" className="size-8" aria-label={`Edit ${promotion.name}`} title="Edit" onClick={() => setEditingId(promotion.id)}>
-                      <Pencil size={13} />
-                    </Button>
-                    <Button variant="outline" size="icon" className="size-8" aria-label={`Duplicate ${promotion.name}`} title="Duplicate" onClick={() => duplicate(promotion.id)}>
-                      <Copy size={13} />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="size-8 text-destructive" aria-label={`Delete ${promotion.name}`} title="Delete" onClick={() => setDeletingId(promotion.id)}>
-                      <Trash2 size={13} />
-                    </Button>
-                  </div>
+                </div>
+
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <Button
+                    variant={count ? "outline" : "brand"}
+                    size="sm"
+                    onClick={() => setManaging(promotion.id)}
+                  >
+                    {count ? "Edit assignment" : "Assign campaigns"}
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-8"
+                        aria-label={`More actions for ${promotion.name}`}
+                      >
+                        <MoreHorizontal size={15} />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuItem onSelect={() => setEditingId(promotion.id)}>
+                        <Pencil size={13} />
+                        Edit promotion
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => duplicate(promotion.id)}>
+                        <Copy size={13} />
+                        Duplicate
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="text-destructive focus:text-destructive"
+                        onSelect={() => setDeletingId(promotion.id)}
+                      >
+                        <Trash2 size={13} />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </article>
             );
@@ -172,28 +206,7 @@ export function PromotionsPage() {
                 : "No promotions match that search."}
             </p>
           )}
-        </TabsContent>
-
-        <TabsContent value="assignments" className="mt-4 space-y-2 pb-16">
-          {list.map((promotion) => {
-            const assigned = assignedCampaigns(promotion.id);
-            return (
-              <article key={promotion.id} className="flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card p-4 shadow-card">
-                <span className="grid size-9 shrink-0 place-items-center rounded-md bg-brand-soft text-brand"><Link2 size={15} /></span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-[13.5px] font-semibold text-card-foreground">{promotion.name}</p>
-                  <p className="mt-0.5 text-[11.5px] text-muted-foreground">
-                    {assigned.length === 0 ? "Not assigned to any campaigns" : `Assigned to ${assigned.length} campaign${assigned.length === 1 ? "" : "s"}`}
-                  </p>
-                </div>
-                <Button variant={assigned.length ? "outline" : "brand"} size="sm" onClick={() => setManaging(promotion.id)}>
-                  {assigned.length ? "Edit assignment" : "Assign campaigns"}
-                </Button>
-              </article>
-            );
-          })}
-        </TabsContent>
-        </Tabs>
+        </div>
       </div>
 
       {creating && <PromotionEditorOverlay promotion={null} onClose={() => setCreating(false)} />}
@@ -209,7 +222,12 @@ export function PromotionsPage() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90" onClick={remove}>Delete promotion</AlertDialogAction>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={remove}
+            >
+              Delete promotion
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
