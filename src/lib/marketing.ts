@@ -1015,3 +1015,39 @@ export const CAMPAIGN_BULK_DRAG_TYPE = "application/x-directful-campaign-bulk";
 export type BulkScope = "both" | "direct" | "ota";
 export const PROMO_DRAG_TYPE = "application/x-directful-promotion";
 
+
+/* -------------------------------------------------------- email templates */
+
+/** The email template a campaign currently uses (Direct leads). */
+export function campaignTemplateId(c: MarketingCampaign): string {
+  return c.variants.direct.email.templateId || c.variants.ota.email.templateId;
+}
+
+/** Applies a saved template to both guest segments of a campaign. */
+export function applyTemplateToCampaign(campaignId: string, templateId: string) {
+  mutate((draft) => {
+    const template = draft.templates.find((t) => t.id === templateId);
+    const campaign = draft.campaigns.find((c) => c.id === campaignId);
+    if (!template || !campaign) return;
+    (["direct", "ota"] as AudienceKey[]).forEach((audience) => {
+      const email = campaign.variants[audience].email;
+      email.templateId = template.id;
+      email.layout = template.layout;
+      email.subject = template.heading;
+      email.heading = template.heading;
+      email.body = template.body;
+      email.ctaLabel = template.ctaLabel;
+    });
+  });
+}
+
+/** Creates a new template from an existing one, ready for editing. */
+export function duplicateTemplate(templateId: string): string | null {
+  const source = state.templates.find((t) => t.id === templateId);
+  if (!source) return null;
+  const id = uid();
+  mutate((draft) => {
+    draft.templates.push({ ...source, id, name: `${source.name} copy` });
+  });
+  return id;
+}
