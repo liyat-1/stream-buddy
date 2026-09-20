@@ -394,13 +394,6 @@ export function PromotionEditorOverlay({ promotion, onClose }: { promotion?: Pro
                 </div>
               </div>
             </section>
-            <section className="rounded-lg border border-border bg-card p-4 shadow-card sm:p-5">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Guest preview</p>
-              <p className="mt-1 text-[12px] text-muted-foreground">This is how the promotion will appear in guest messages.</p>
-              <div className="mx-auto mt-4 max-w-md">
-                <PromoBanner promotion={preview} />
-              </div>
-            </section>
 
             {error && <p className="text-[11.5px] font-medium text-destructive">{error}</p>}
             <div className="sticky bottom-0 flex justify-end gap-2 border-t border-border bg-canvas/95 py-3 backdrop-blur">
@@ -410,8 +403,19 @@ export function PromotionEditorOverlay({ promotion, onClose }: { promotion?: Pro
               </Button>
             </div>
           </div>
+
+          <aside className="min-w-0 lg:sticky lg:top-0 lg:self-start">
+            <section className="rounded-lg border border-border bg-card p-4 shadow-card">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-brand">Guest preview</p>
+              <p className="mt-1 text-[12px] text-muted-foreground">This is how the promotion will appear in guest messages.</p>
+              <div className="mt-4">
+                <PromoBanner promotion={preview} />
+              </div>
+            </section>
+          </aside>
         </div>
       </div>
+
 
       <MediaPicker
         open={picker !== null}
