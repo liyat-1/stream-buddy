@@ -1,4 +1,4 @@
-- [ ] Add contextual promo-link landing preview beside the text preview
-- [ ] Ensure new promotion designs appear in add/change promotion flows
-- [ ] Make email templates structurally distinct, warm, and hotelier-friendly
-- [ ] Remove Change layout and improve template selection previews, sizing, and full-view action
+- [x] Add contextual promo-link landing preview beside the text preview
+- [x] Ensure new promotion designs appear in add/change promotion flows
+- [x] Make email templates structurally distinct, warm, and hotelier-friendly
+- [x] Remove Change layout and improve template selection previews, sizing, and full-view action

@@ -4,6 +4,7 @@ import { TextEditor } from "./TextEditor";
 import { EmailEditor, EmailPreview } from "./EmailEditor";
 import { PromotionSelector } from "./PromotionSelector";
 import { SmsPreview } from "@/components/editor/SmsPreview";
+import { LandingPreview } from "@/components/editor/LandingPreview";
 import { checkContent } from "./contentChecks";
 import { Button } from "@/components/ui/button";
 import {
@@ -83,6 +84,7 @@ export function CampaignEditor({ id, onClose }: { id: string; onClose: () => voi
   const [panel, setPanel] = useState<Panel>(null);
   const [confirm, setConfirm] = useState<"leave" | "save" | "revert" | null>(null);
   const [promotionPicker, setPromotionPicker] = useState(false);
+  const [landingOpened, setLandingOpened] = useState(false);
   const dirty = useMemo(() => draft ? JSON.stringify(draft) !== baseline : false, [draft, baseline]);
 
   useEffect(() => {
@@ -171,7 +173,7 @@ export function CampaignEditor({ id, onClose }: { id: string; onClose: () => voi
       </header>
 
       <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5 sm:px-6">
-        <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+         <div className={`mx-auto grid max-w-[1500px] gap-6 ${activeChannel === "text" ? "xl:grid-cols-[minmax(0,1fr)_620px]" : "lg:grid-cols-[minmax(0,1fr)_460px]"}`}>
           <div className="min-w-0">
             {/* Channel tabs — Text and Email each keep their own Direct / OTA sections */}
             <div className="mb-3 flex flex-wrap items-center gap-2">
@@ -316,14 +318,20 @@ export function CampaignEditor({ id, onClose }: { id: string; onClose: () => voi
               Preview · {AUDIENCE_LABEL[audience]} · {activeChannel === "text" ? "Text" : "Email"}
             </p>
             {activeChannel === "text" ? (
-              <div className="flex max-w-full justify-center overflow-x-auto pb-2 lg:justify-start">
+               <div className="flex max-w-full items-start gap-4 overflow-x-auto pb-2 lg:justify-start">
                 <SmsPreview
                   message={variant.text.message}
+                   link={variant.email.ctaUrl}
                   imageUrl={previewMedia?.url ?? null}
                   sender="Holiday Inn"
                   scale={0.62}
                   promotion={activePromotion}
+                   onOpenLanding={() => setLandingOpened(true)}
                 />
+                 <div className={`transition-all duration-300 ${landingOpened ? "scale-[1.01]" : ""}`}>
+                   <p className="mb-2 text-center text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Link destination</p>
+                   <LandingPreview campaignName={draft.name} purpose={draft.purpose} timing={draft.timing} heading={variant.email.heading} body={variant.email.body || variant.text.message} imageUrl={previewMedia?.url ?? null} promotion={activePromotion} scale={0.55} />
+                 </div>
               </div>
             ) : (
               <EmailPreview value={variant.email} promotion={activePromotion} />

@@ -15,6 +15,7 @@ export function SmsPreview({
   sender = "Hellas Gadgets",
   scale = 0.78,
   promotion,
+  onOpenLanding,
 }: {
   message: string;
   link?: string;
@@ -22,6 +23,7 @@ export function SmsPreview({
   sender?: string;
   scale?: number;
   promotion?: Promotion | null;
+  onOpenLanding?: () => void;
 }) {
   return (
     <PhoneMockup
@@ -75,14 +77,14 @@ export function SmsPreview({
           <p className="whitespace-pre-wrap text-[15px] leading-[1.35] text-zinc-900">
             {renderTokens(message)}
           </p>
-          {link && (
-            <p className="mt-1 break-all text-[14.5px] leading-[1.35] text-[#007aff] underline">
+           {link && (
+             <button type="button" onClick={onOpenLanding} className="mt-1 block break-all text-left text-[14.5px] leading-[1.35] text-[#007aff] underline">
               {link}
-            </p>
+             </button>
           )}
         </div>
         {promotion && (
-          <div className="max-w-[80%] overflow-hidden rounded-[1.4rem] rounded-bl-[0.45rem] bg-[#e9e9eb]">
+          <button type="button" onClick={onOpenLanding} className="block max-w-[80%] overflow-hidden rounded-[1.4rem] rounded-bl-[0.45rem] bg-[#e9e9eb] text-left">
             <div className="bg-zinc-900 px-3.5 py-2.5 text-white">
               <p className="text-[10px] font-semibold uppercase tracking-wide text-zinc-300">Your exclusive offer</p>
               <p className="mt-0.5 text-[14.5px] font-semibold leading-snug">{promotion.tagline || promotion.name}</p>
@@ -93,7 +95,7 @@ export function SmsPreview({
                 {CODE_TYPE_LABEL[promotion.codeType ?? "promo"]}: {promotion.code}
               </p>
             </div>
-          </div>
+          </button>
         )}
       </div>
 
