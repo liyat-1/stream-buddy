@@ -379,7 +379,22 @@ const LAYOUT_TEMPLATES: EmailTemplate[] = LAYOUT_PRESETS.map((preset) => {
   };
 });
 
+/** Editorial hotel templates inspired by established hospitality campaigns. */
+const HOTEL_EDITORIAL_TEMPLATES: EmailTemplate[] = [
+  { id: "hotel-resort-promotion", name: "Resort Promotion", desc: "Panoramic pool story, centered offer panel, room gallery and booking action.", category: "Hotel campaigns", accent: "#8b6547", hero: poolDusk, heading: "A little more summer, just for you", body: "Relax by the pool and settle into a room made for slow mornings.\nBook direct for thoughtful extras and our most flexible rate.\nTerms apply to selected dates and room types.", ctaLabel: "Book your stay", layout: "newsletter_grid", layouts: ["newsletter_grid"] },
+  { id: "hotel-suite-spotlight", name: "Suite Spotlight", desc: "Cinematic full-height suite story with oversized editorial type.", category: "Hotel campaigns", accent: "#5f4938", hero: suiteDetail, heading: "Did you know?", body: "Staying in a suite means a separate living and sleeping area — perfect for families, longer stays, or anyone who loves extra space.", ctaLabel: "Book your suite today", layout: "dark_luxe", layouts: ["dark_luxe"] },
+  { id: "hotel-concierge", name: "Everything Arranged", desc: "Three arched service features for dining, transport and local experiences.", category: "Guest experience", accent: "#9b7a3b", hero: breakfastTerrace, heading: "Everything can be arranged", body: "Floating breakfast by the pool.\nPrivate transfer at arrival.\nLocal experiences chosen by our team.", ctaLabel: "Plan my stay", layout: "list_highlights", layouts: ["list_highlights"] },
+  { id: "hotel-seasonal-invite", name: "Seasonal Invitation", desc: "A refined event invitation with formal details and an RSVP action.", category: "Events", accent: "#71613b", hero: courtyard, heading: "A new season begins", body: "Join us for an evening in the courtyard with seasonal plates, local music and a welcome drink.\nPlease reserve in advance; places are limited.", ctaLabel: "I'll be there", layout: "centered_invite", layouts: ["centered_invite"] },
+  { id: "hotel-destination-story", name: "Destination Story", desc: "Layered travel editorial with immersive imagery and story sections.", category: "Inspiration", accent: "#17648a", hero: heroAmalfi, heading: "Your own slice of paradise", body: "Wake to the bay, spend the afternoon on the water and come home to sunset on the terrace.\nA stay shaped around the way you like to travel.", ctaLabel: "Discover the destination", layout: "magazine", layouts: ["magazine"] },
+  { id: "hotel-limited-offer", name: "Last Chance Offer", desc: "Luxury image-led campaign with a centered offer block and booking actions.", category: "Promotional", accent: "#2466a0", hero: lobbyArrival, heading: "Your private offer ends soon", body: "Book your next stay direct and enjoy a preferred guest rate on selected dates.\nFlexible changes are included when you reserve with us.", ctaLabel: "View offer", layout: "offer_first", layouts: ["offer_first"] },
+  { id: "hotel-in-stay-service", name: "Enjoy Your Stay", desc: "Immersive in-stay message with one prominent guest-service action.", category: "During stay", accent: "#544936", hero: rooftopBar, heading: "Enjoy your stay", body: "Everything you need is only a tap away — room service, local recommendations and help from our team.", ctaLabel: "View guest services", layout: "postcard", layouts: ["postcard"] },
+  { id: "hotel-return-offer", name: "Return to the Resort", desc: "Warm return-stay offer with a second feature and social footer.", category: "Promotional", accent: "#6c5522", hero: heroValley, heading: "Save on your next stay", body: "We would love to welcome you back. Book direct to unlock preferred rates and thoughtful extras.\nYour next room, breakfast and a slower morning are waiting.", ctaLabel: "Grab this offer", layout: "logo_header", layouts: ["logo_header"] },
+  { id: "hotel-room-collection", name: "Room Collection", desc: "Curved hero treatment and a pair of room offers with separate stories.", category: "Rooms", accent: "#255440", hero: roomBalcony, heading: "Save on our best rooms", body: "Deluxe rooms with extra comfort and calm.\nSuites with more room to settle in and stay awhile.", ctaLabel: "Explore rooms", layout: "two_column_cards", layouts: ["two_column_cards"] },
+  { id: "hotel-membership", name: "Membership Welcome", desc: "Bold welcome panel followed by a structured collection of guest benefits.", category: "Loyalty", accent: "#292624", hero: breakfastTerrace, heading: "You're in", body: "Your guest membership is ready. Earn, redeem and explore more every time you stay direct.\nPreferred rates. Room upgrades. Experiences selected for members.", ctaLabel: "Let's go", layout: "stay_receipt", layouts: ["stay_receipt"] },
+];
+
 const TEMPLATES: EmailTemplate[] = [
+  ...HOTEL_EDITORIAL_TEMPLATES,
   {
     id: "welcome",
     name: "Welcome to Your Stay",
@@ -1033,10 +1048,6 @@ export function applyTemplateToCampaign(campaignId: string, templateId: string) 
       const email = campaign.variants[audience].email;
       email.templateId = template.id;
       email.layout = template.layout;
-      email.subject = template.heading;
-      email.heading = template.heading;
-      email.body = template.body;
-      email.ctaLabel = template.ctaLabel;
     });
   });
 }

@@ -183,10 +183,6 @@ export function EmailEditor({
             ...value,
             templateId: t.id,
             layout: t.layout,
-            subject: t.heading,
-            heading: t.heading,
-            body: t.body,
-            ctaLabel: t.ctaLabel,
           });
         }}
       />

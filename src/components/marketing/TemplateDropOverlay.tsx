@@ -212,7 +212,7 @@ export function TemplateDropOverlay({
                    <div className="flex items-start gap-2"><div className="min-w-0 flex-1"><p className="truncate text-[13px] font-semibold text-card-foreground">{template.name}</p><p className="truncate text-[10.5px] text-muted-foreground">
                     {template.category} · {rows.length} campaign{rows.length === 1 ? "" : "s"}
                    </p></div><Button variant="ghost" size="icon" className="size-8" aria-label={`Preview ${template.name}`} title="Preview full template" onClick={() => setPreview(template)}><Eye size={15} /></Button></div>
-                   <div className="mt-3 h-52 overflow-hidden rounded-md border border-border bg-muted p-2"><div className="origin-top-left scale-[0.42]" style={{ width: "238%" }}><MarketingEmailPreview value={templateEmailContent(template)} template={template} className="rounded-none shadow-none" /></div></div>
+                   <div className="mt-3 h-72 overflow-hidden rounded-md border border-border bg-muted p-2"><div className="origin-top-left scale-[0.5]" style={{ width: "200%" }}><MarketingEmailPreview value={templateEmailContent(template)} template={template} className="rounded-none shadow-none" /></div></div>
                   <div className="mt-2 flex flex-wrap gap-1.5">
                     <Button variant="outline" size="sm" className="h-7 px-2 text-[11px]" onClick={() => setPicking(templateId)}>
                       <Repeat2 size={12} />
