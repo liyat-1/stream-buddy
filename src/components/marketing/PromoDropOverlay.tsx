@@ -425,11 +425,29 @@ export function PromoDropOverlay({
                             </p>
                           </div>
                         </div>
+                        <div className="mt-2 flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setPicker(index)}
+                            className="inline-flex items-center gap-1.5 rounded-sm border border-border bg-card px-2 py-1 text-[10.5px] font-semibold text-card-foreground transition-colors hover:border-brand/45 hover:text-brand"
+                          >
+                            <Gift size={11} />
+                            Change offer
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setAreas((current) => current.map((v, i) => (i === index ? null : v)))}
+                            className="inline-flex items-center gap-1.5 rounded-sm border border-transparent px-2 py-1 text-[10.5px] font-semibold text-muted-foreground transition-colors hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive"
+                          >
+                            <Trash2 size={11} />
+                            Clear column
+                          </button>
+                        </div>
                         <button
                           type="button"
                           onClick={() => setDetails(open ? null : index)}
                           aria-expanded={open}
-                          className="mt-2 flex w-full items-center justify-between rounded-sm px-1 py-1 text-[10.5px] font-semibold text-brand transition-colors hover:bg-brand-soft/70"
+                          className="mt-1.5 flex w-full items-center justify-between rounded-sm px-1 py-1 text-[10.5px] font-semibold text-brand transition-colors hover:bg-brand-soft/70"
                         >
                           See config details
                           <ChevronDown size={12} className={`transition-transform ${open ? "rotate-180" : ""}`} />
@@ -451,18 +469,6 @@ export function PromoDropOverlay({
                             <p className="mt-1.5 border-t border-border pt-1.5 text-[10.5px] leading-snug text-muted-foreground">
                               {promotion.detail}
                             </p>
-                            <div className="mt-2 flex items-center gap-3 border-t border-border pt-2">
-                              <button type="button" onClick={() => setPicker(index)} className="text-[10.5px] font-semibold text-brand hover:underline">
-                                Change offer
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setAreas((current) => current.map((v, i) => (i === index ? null : v)))}
-                                className="text-[10.5px] text-muted-foreground hover:text-destructive"
-                              >
-                                Clear column
-                              </button>
-                            </div>
                           </div>
                         )}
                       </div>

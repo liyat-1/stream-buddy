@@ -135,3 +135,14 @@
 - [x] Media assignment rebuilt on the promo model: fixed campaign column, file columns with Change file / Browse library, Direct/OTA checkboxes
 - [x] Both boards are horizontally scrollable with Add offer / Add file, so the count is not fixed at three
 - [x] iPhone preview: composer pinned outside the scroll area, frosted glass, larger; content no longer overflows the frame
+
+## Banner templates, email layouts, and board controls
+
+- [x] Per-audience drag logic: All OTA leaves Direct free (and vice versa); only All campaigns empties No promotion; unchecking a segment returns it to the available column greyed-out style
+- [x] Nine new editable promo banner templates (neon ticket, tape sale, coupon note, stacked poster, classic voucher, fashion sale, split sale, type coupon, gift offer) driven by promotion wording
+- [x] Promotion editor now shows the guest banner preview in a sticky right column beside the form
+- [x] Ten new email layouts (newsletter grid, logo header, centered invite, offer first, two-column cards, postcard, list highlights, magazine, dark luxe, stay receipt) with editable content
+- [x] Media board drops "See file details": Change file and Clear column sit directly on each column
+- [x] Offer columns keep "See config details" for promotion info only, with Change offer and Clear column moved out beside the header
+- [x] Close/save sweep via Playwright: campaign editor, promotion editor, strategy dialog, test dialog, assign board, promo and media boards all leave the page usable — freeze not reproducible
+- [ ] Consolidate Promotions and Assignments tabs into one workspace per the approved plan
