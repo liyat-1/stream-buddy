@@ -109,7 +109,18 @@ export const LAYOUT_PRESETS: {
   { value: "image_right", label: "Image right", desc: "Existing copy left with the image anchored right.", photo: spaTreatment },
   { value: "headline_first", label: "Headline first", desc: "Heading and copy lead before the existing image and action.", photo: lobbyArrival },
   { value: "cta_focus", label: "Action focus", desc: "A compact structure that gives the existing action more emphasis.", photo: poolDusk },
+  { value: "newsletter_grid", label: "Seasonal newsletter", desc: "Logo header, hero photo, centred story, then a colour band with a four card what's-on grid.", photo: courtyard },
+  { value: "logo_header", label: "Branded header", desc: "Logo bar above the hero, copy and action — the classic hotel announcement.", photo: lobbyArrival },
+  { value: "centered_invite", label: "Centred invitation", desc: "Formal centred wording with hairline rules, like a printed invite.", photo: suiteDetail },
+  { value: "offer_first", label: "Offer first", desc: "Discount band at the very top, story and action underneath.", photo: rooftopBar },
+  { value: "two_column_cards", label: "Two card feature", desc: "Hero, copy, then two captioned cards side by side.", photo: breakfastTerrace },
+  { value: "postcard", label: "Postcard", desc: "Wide photo with the message set to one side, like a holiday card.", photo: poolDusk },
+  { value: "list_highlights", label: "Numbered highlights", desc: "Copy followed by a numbered list of what's included.", photo: familyPool },
+  { value: "magazine", label: "Magazine feature", desc: "Editorial column with a tall photo and pull quote.", photo: spaTreatment },
+  { value: "dark_luxe", label: "Dark luxe", desc: "Dark, quiet layout for premium and suite messaging.", photo: roomBalcony },
+  { value: "stay_receipt", label: "Stay summary", desc: "Confirmation style with a details table and action.", photo: suiteDetail },
 ];
+
 
 export const LAYOUT_LABEL = (v: EmailLayout) =>
   LAYOUT_PRESETS.find((l) => l.value === v)?.label ?? "Hero on top";
